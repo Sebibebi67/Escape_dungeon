@@ -2,7 +2,7 @@ package display;
 
 import javax.swing.JPanel;
 import java.awt.Color;
-import java.awt.*;
+// import java.awt.*;
 
 public class SPanel extends JPanel{
 
