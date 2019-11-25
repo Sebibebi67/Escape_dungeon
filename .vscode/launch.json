@@ -4,6 +4,13 @@
             "type": "java",
             "name": "CodeLens (Launch) - Main",
             "request": "launch",
+            "mainClass": "main.Main",
+            "projectName": "Escape_Dungeon_fd3ea09b"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Main",
+            "request": "launch",
             "mainClass": "Main",
             "projectName": "Escape_Dungeon_fd3ea09b"
         }

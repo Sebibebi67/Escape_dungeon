@@ -1,3 +1,5 @@
+package main;
+
 import java.io.File;
 import java.awt.*;
 import java.awt.image.*;
@@ -27,6 +29,8 @@ public class Game implements Runnable{
     private int xMouse = 0;
     private int yMouse = 0;
 
+    private int nbMap = 1;
+
     public Game(){
 
         initFrame();
@@ -49,8 +53,8 @@ public class Game implements Runnable{
     public void init(){
         this.panel = frame.getPanel();
         this.finalG = panel.getGraphics();
-        map = new Map(file, sizeX, sizeY, cellSize);
-        player = new Player();
+        map = new Map(file, sizeX, sizeY, cellSize, nbMap);
+        player = new Player(map);
     }
 
     public void display(){
@@ -78,8 +82,9 @@ public class Game implements Runnable{
     public void run(){
         wait(100);
         while(true){
+            map.update();
             player.update(activKey);
-            wait(50);
+            wait(20);
         }
     }
 
@@ -110,7 +115,9 @@ public class Game implements Runnable{
                     break;
 
                 case KeyEvent.VK_SPACE:
-                    // player.shot();
+                    // map.changeMap();
+                    // player.setPosX(590);
+                    // player.setPosY(780);
                     break;
             }
         }
