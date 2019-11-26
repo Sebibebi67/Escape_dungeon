@@ -25,9 +25,9 @@ public class Game implements Runnable{
     private Player player;
 
     private volatile Boolean[] activKey = { false, false, false, false};
-    private Boolean activMouse = false;
-    private int xMouse = 0;
-    private int yMouse = 0;
+    private volatile Boolean activMouse = false;
+    private volatile int xMouse = 0;
+    private volatile int yMouse = 0;
 
     private int nbMap = 1;
 
@@ -83,7 +83,8 @@ public class Game implements Runnable{
         wait(100);
         while(true){
             map.update();
-            player.update(activKey);
+            player.setAlphaCanon2(xMouse, yMouse);
+            player.update(activKey, activMouse);
             wait(20);
         }
     }
@@ -151,10 +152,28 @@ public class Game implements Runnable{
     private class SMAdapter extends MouseAdapter{
 
         @Override
+        public void mouseMoved(MouseEvent e) {
+            
+            xMouse = e.getX();
+            yMouse = e.getY();
+            // System.out.println(xMouse+" "+yMouse);
+            // player.setAlphaCanon2(xMouse, yMouse);
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e){
+            xMouse = e.getX();
+            yMouse = e.getY();
+        }
+
+        @Override
         public void mousePressed(MouseEvent e) {
             int button = e.getButton();
             if (button == MouseEvent.BUTTON1) {
                 // player.shot();
+                xMouse = e.getX();
+                yMouse = e.getY();
+                // System.out.println(xMouse+" "+yMouse);
                 activMouse = true;
             }
         }
@@ -168,10 +187,6 @@ public class Game implements Runnable{
             }
         }
 
-        @Override
-        public void mouseMoved(MouseEvent e) {
-            xMouse = e.getX();
-            yMouse = e.getY();
-        }
+
     }
 }

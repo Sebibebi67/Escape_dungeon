@@ -1,6 +1,8 @@
 package player;
 
 import java.awt.*;
+import java.util.ArrayList;
+
 import main.*;
 
 public class Player{
@@ -9,31 +11,46 @@ public class Player{
 
     private double posX;
     private double posY;
+    private double alpha;
 
     private int size = 20 ;
-
     private double speed = 5;
 
     private Map map;
+
+    private ArrayList<Shot> shots = new ArrayList<>();
 
     public Player(Map map){
 
         this.posX = 30;
         this.posY = 30;
-
         this.map = map;
+
+        this.alpha = 0;
+
 
     }
 
     public void display(Graphics g){
 
+        for (int i = 0; i<shots.size(); i++){
+            shots.get(i).display(g);
+        }
         g.setColor(Color.RED);
         g.fillRect((int)posX, (int)posY, size, size);
+        
     }
 
-    public void update(Boolean[] keys){
+    public void update(Boolean[] keys, boolean mouse){
         this.checkWalls();
         this.move(keys);
+        if (mouse){this.shot();}
+        for (int i = 0; i<shots.size(); i++){
+            shots.get(i).update();
+            if (map.wallCollision(shots.get(i).getShape())){
+                shots.remove(i);
+            }
+        }
         this.checkChangeMap();
     }
 
@@ -76,6 +93,7 @@ public class Player{
 
     public void checkChangeMap(){
         if (map.isFinished() && posY <= 0){
+            shots = new ArrayList<>();
             map.changeMap();
             this.setPosX(590);
             this.setPosY(780);
@@ -84,4 +102,14 @@ public class Player{
 
     public void setPosX(int x){this.posX = x;}
     public void setPosY(int y){this.posY = y;}
+    public void setAlphaCanon(double alpha){this.alpha = alpha;}
+    public void setAlphaCanon2(int xMouse, int yMouse){
+        this.alpha = Math.atan2(yMouse - this.posY, xMouse - this.posX);
+        // System.out.println(alpha);
+    }
+
+    public void shot(){
+        Shot shot = new Shot(this.posX+size/2, this.posY+size/2, this.alpha);
+        shots.add(shot);
+    }
 }
