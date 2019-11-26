@@ -15,6 +15,8 @@ public class Player{
 
     private int size = 20 ;
     private double speed = 5;
+    private int countDown;
+    private int countDownMax =10;
 
     private Map map;
 
@@ -22,11 +24,13 @@ public class Player{
 
     public Player(Map map){
 
-        this.posX = 30;
-        this.posY = 30;
+        this.posX = 590;
+        this.posY = 400;
         this.map = map;
 
         this.alpha = 0;
+
+        countDown = countDownMax;
 
 
     }
@@ -44,7 +48,13 @@ public class Player{
     public void update(Boolean[] keys, boolean mouse){
         this.checkWalls();
         this.move(keys);
-        if (mouse){this.shot();}
+        if (this.countDown > 0){
+            this.countDown--;
+        }
+        if (mouse && this.countDown == 0){
+            this.shot();
+            this.countDown = this.countDownMax;
+        }
         for (int i = 0; i<shots.size(); i++){
             shots.get(i).update();
             if (map.wallCollision(shots.get(i).getShape())){
@@ -95,7 +105,6 @@ public class Player{
         if (map.isFinished() && posY <= 0){
             shots = new ArrayList<>();
             map.changeMap();
-            this.setPosX(590);
             this.setPosY(780);
         }
     }

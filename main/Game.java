@@ -29,7 +29,7 @@ public class Game implements Runnable{
     private volatile int xMouse = 0;
     private volatile int yMouse = 0;
 
-    private int nbMap = 1;
+    private int nbMap = 2;
 
     public Game(){
 

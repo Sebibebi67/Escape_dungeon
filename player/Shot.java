@@ -17,7 +17,7 @@ public class Shot{
         this.x = x;
         this.y = y;
         this.alpha = alpha;
-        this.speed = 15;
+        this.speed = 10;
         this.rect = newrect();
     }
 
