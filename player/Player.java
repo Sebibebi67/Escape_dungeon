@@ -30,7 +30,7 @@ public class Player{
 
         this.alpha = 0;
 
-        countDown = countDownMax;
+        this.countDown = this.countDownMax;
 
 
     }
